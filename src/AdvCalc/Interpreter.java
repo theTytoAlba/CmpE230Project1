@@ -28,25 +28,15 @@ public class Interpreter {
 
 	/**
 	 * Parses equations in form "x = y" to x and y.
-	 * Uses updateValue and calculateValue functions to
-	 * update the value in x to y.
+	 * Updates x with the value of y.
 	 */
 	private void processAssignment(String line) {
-		// TODO: get target from the equation.
-		char target = 'A';
-		// TODO: get right hand side from the equation.
-		String rhs = null;
-		updateValue(target, calculateValue(rhs));
+		String[] assignment = line.split("=");
+		char target = assignment[0].charAt(0);
+		String rhs = assignment[1];
+		variables.put(target, calculateValue(rhs));
 	}
-	
-	/**
-	 * Updates the value of the target.
-	 */
-	private void updateValue(char target, double d) {
-		// TODO: implement update logic
-		System.out.println("Updating value");
-	}
-	
+		
 	/**
 	 * Calculates the given line mathematically.
 	 */
