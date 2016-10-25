@@ -35,7 +35,6 @@ public class Main {
 			try {
 				advcalc.process(in.nextLine());
 			} catch (NoSuchElementException e) {
-				System.out.println("Closing calculator.");
 				in.close();
 				return;
 			}

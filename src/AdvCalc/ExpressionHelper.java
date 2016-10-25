@@ -129,7 +129,16 @@ public class ExpressionHelper {
 				stack.push("" + calculateOperation(Double.parseDouble(op1), Double.parseDouble(op2), operator));
 			}
 		}
-		return Double.parseDouble(stack.pop());
+		String result = stack.pop();
+		if (isVariable(result)) {
+			if (variables.containsKey(result.charAt(0))) {
+				return variables.get(result.charAt(0));
+			} else {
+				return 0.0;
+			}
+		} else {
+			return Double.parseDouble(result);		
+		}
 	}
 	
 	/**
