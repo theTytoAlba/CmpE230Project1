@@ -1,10 +1,15 @@
+package AdvCalc;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import AdvCalc.Interpreter;
-
 public class Main {
 	public static void main(String[] args) {
+		// TODO: Remove after compiler mode testing is done.
+		args = new String[1];
+		args[0] = "file.ac";
+		
 		// If there is an argument, enter the compiler mode.
 		if (args.length == 1) {
 			compilerMode(args[0]);
@@ -20,8 +25,14 @@ public class Main {
 	 * @param fileName
 	 */
 	private static void compilerMode(String fileName) {
-		//TODO: do the assembly stuff.
-		System.out.println("Creating assebmly for file " + fileName);
+		A86Writer a86 = new A86Writer(fileName);
+		try {
+			a86.generate();
+			System.out.println(a86.getOutputFileName() + " was generated.");	
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.out.println(a86.getOutputFileName() + " was not generated.");		
+			e.printStackTrace();
+		}
 	}
 	
 	/**

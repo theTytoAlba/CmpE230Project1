@@ -102,7 +102,7 @@ public class ExpressionHelper {
 	 * @param variables
 	 * @return value
 	 */
-	public static double calculatePostfixValue(ArrayList<String> tokens, HashMap<Character, Double> variables) {
+	public static int calculatePostfixValue(ArrayList<String> tokens, HashMap<Character, Integer> variables) {
 		Stack<String> stack = new Stack<String>();
 		for (String token : tokens) {
 			// if: token is operand so push to stack, else: token is operator so calculate and update stack.
@@ -126,19 +126,19 @@ public class ExpressionHelper {
 						op1 = "" + 0.0;
 					}
 				}
-				stack.push("" + calculateOperation(Double.parseDouble(op1), Double.parseDouble(op2), operator));
+				stack.push("" + calculateOperation(Integer.parseInt(op1), Integer.parseInt(op2), operator));
 			}
 		}
 		String result = stack.pop();
 		if (isVariable(result)) {
 			if (variables.containsKey(result.charAt(0))) {
-				return variables.get(result.charAt(0));
+				result = "" + variables.get(result.charAt(0));
 			} else {
-				return 0.0;
+				result = "" + 0.0;
 			}
-		} else {
-			return Double.parseDouble(result);		
-		}
+		} 
+
+		return Integer.parseInt(result);		
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class ExpressionHelper {
 	 * @param operator
 	 * @return
 	 */
-	private static double calculateOperation(double op1, double op2, char operator) {
+	private static int calculateOperation(int op1, int op2, char operator) {
 		switch (operator) {
 			case '+':
 				return op1 + op2;
@@ -174,7 +174,7 @@ public class ExpressionHelper {
 			case '/':
 				return op1 / op2;
 		}
-		return 0.0;
+		return 0;
 	}
 	
 	/**

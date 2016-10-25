@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 
 public class Interpreter {
-	private HashMap<Character, Double> variables;
+	private HashMap<Character, Integer> variables;
 	
 	public Interpreter() {
 		variables = new HashMap<>();
@@ -40,7 +40,7 @@ public class Interpreter {
 	/**
 	 * Calculates the given line mathematically.
 	 */
-	private double calculateValue(String line) {
+	private int calculateValue(String line) {
 		// Get the line as an ArrayList<String> of its tokens.
 		ArrayList<String> tokens = ExpressionHelper.getTokensOfExpression(line);
         // Convert tokens from infix to postfix.
