@@ -1,6 +1,7 @@
 package AdvCalc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class ExpressionHelper {
@@ -96,11 +97,12 @@ public class ExpressionHelper {
 	}
 
 	/**
-	 * Calculates given postfix value.
+	 * Calculates given postfix value using the values of variables .
 	 * @param tokens
+	 * @param variables
 	 * @return value
 	 */
-	public static double calculatePostfixValue(ArrayList<String> tokens) {
+	public static double calculatePostfixValue(ArrayList<String> tokens, HashMap<Character, Double> variables) {
 		Stack<String> stack = new Stack<String>();
 		for (String token : tokens) {
 			// if: token is operand so push to stack, else: token is operator so calculate and update stack.
@@ -108,9 +110,23 @@ public class ExpressionHelper {
 				stack.push(token);
 			} else {
 				char operator = token.charAt(0);
-				double op2 = Double.parseDouble(stack.pop());
-				double op1 = Double.parseDouble(stack.pop());
-				stack.push("" + calculateOperation(op1, op2, operator));
+				String op2 = stack.pop();
+				if (isVariable(op2)) {
+					if (variables.containsKey(op2.charAt(0))) {
+						op2 = "" + variables.get(op2.charAt(0));
+					} else {
+						op2 = "" + 0.0;
+					}
+				}
+				String op1 = stack.pop();
+				if (isVariable(op1)) {
+					if (variables.containsKey(op1.charAt(0))) {
+						op1 = "" + variables.get(op1.charAt(0));
+					} else {
+						op1 = "" + 0.0;
+					}
+				}
+				stack.push("" + calculateOperation(Double.parseDouble(op1), Double.parseDouble(op2), operator));
 			}
 		}
 		return Double.parseDouble(stack.pop());
@@ -131,6 +147,13 @@ public class ExpressionHelper {
 		}
 	}
 	
+	/**
+	 * Calculates the operation "op1 operator op2".
+	 * @param op1
+	 * @param op2
+	 * @param operator
+	 * @return
+	 */
 	private static double calculateOperation(double op1, double op2, char operator) {
 		switch (operator) {
 			case '+':
@@ -143,5 +166,22 @@ public class ExpressionHelper {
 				return op1 / op2;
 		}
 		return 0.0;
+	}
+	
+	/**
+	 * Checks if given string is a variable. Returns true if it is a single letter.
+	 * @param s
+	 * @return
+	 */
+	private static boolean isVariable(String s) {
+		if (s.length() != 1) {
+			return false;
+		} 
+		
+		char c = s.charAt(0);
+		if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+			return true;
+		}
+		return false;
 	}
 }

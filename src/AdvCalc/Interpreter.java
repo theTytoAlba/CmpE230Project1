@@ -1,9 +1,15 @@
 package AdvCalc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Interpreter {
+	private HashMap<Character, Double> variables;
+	
+	public Interpreter() {
+		variables = new HashMap<>();
+	}
 	
 	/**
 	 * Chooses what to do with the given line.
@@ -50,7 +56,6 @@ public class Interpreter {
         // Convert tokens from infix to postfix.
         tokens = ExpressionHelper.convertInfixToPostfix(tokens);
         // Calculate the postfix value.
-        return ExpressionHelper.calculatePostfixValue(tokens);   
+        return ExpressionHelper.calculatePostfixValue(tokens, variables);   
 	}
-	
 }
