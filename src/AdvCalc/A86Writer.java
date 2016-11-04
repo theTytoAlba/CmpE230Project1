@@ -24,6 +24,11 @@ public class A86Writer {
 		outputFile = filename.substring(0, filename.length()-2) + "asm";
 	}
 
+	/**
+	 * Generates an A86 output file from an ac input file.
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 */
 	public void generate() throws FileNotFoundException, UnsupportedEncodingException {
 		writer = new PrintWriter(outputFile, "UTF-8");
 		File file = new File(inputFile);
@@ -77,9 +82,39 @@ public class A86Writer {
 		writer.println("ret");
 	}
 	
+	/**
+	 * Writes the A86 code to the asm file for given line.
+	 * @param line
+	 */
 	private void process (String line) {
+		// TODO: remove log.
 		System.out.println("Processing: " + line);
-		// TODO: Parse and process lines.	
+		
+		// Remove white spaces.
+        line = line.replaceAll(" ", "");
+        
+		if (line.contains("=")) {
+			processAssignment(line);
+		} else {
+			processCalculation(line);
+		}
+	}
+	
+	/**
+	 * Writes the A86 code for an assignment.
+	 * @param line
+	 */
+	private void processAssignment(String line) {
+		//TODO: fill
+	}
+	
+
+	/**
+	 * Writes the A86 code for a calculation.
+	 * @param line
+	 */
+	private void processCalculation(String line) {
+		//TODO: fill
 	}
 	
 	/**
